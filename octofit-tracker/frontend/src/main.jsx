@@ -5,10 +5,19 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById('root')
+
+if (!rootElement) {
+  throw new Error('Unable to find the application root element.')
+}
+
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim()
+const environment = codespaceName ? `Codespaces (${codespaceName})` : 'Local development'
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <App environment={environment} />
     </BrowserRouter>
   </React.StrictMode>,
 )
