@@ -5,7 +5,8 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "node --test test/**/*.test.js"
   },
   "dependencies": {
     "dotenv": "^16.0.1",
