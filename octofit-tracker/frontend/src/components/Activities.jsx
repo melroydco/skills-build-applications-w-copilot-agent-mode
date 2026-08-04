@@ -6,6 +6,10 @@ const fallbackActivities = [
   { id: 2, type: 'Strength', durationMinutes: 45, note: 'Upper body circuit' },
 ]
 
+const activitiesUrl = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities/`
+  : 'http://localhost:8000/api/activities/'
+
 export default function Activities() {
   const [activities, setActivities] = useState([])
   const [loading, setLoading] = useState(true)
@@ -13,7 +17,7 @@ export default function Activities() {
   useEffect(() => {
     let isMounted = true
 
-    fetchResource('activities', fallbackActivities).then((items) => {
+    fetchResource(activitiesUrl, fallbackActivities).then((items) => {
       if (isMounted) {
         setActivities(items)
         setLoading(false)

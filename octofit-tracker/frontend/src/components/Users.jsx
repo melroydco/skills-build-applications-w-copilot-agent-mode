@@ -6,6 +6,10 @@ const fallbackUsers = [
   { id: 2, name: 'Grace', role: 'member' },
 ]
 
+const usersUrl = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users/`
+  : 'http://localhost:8000/api/users/'
+
 export default function Users() {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -13,7 +17,7 @@ export default function Users() {
   useEffect(() => {
     let isMounted = true
 
-    fetchResource('users', fallbackUsers).then((items) => {
+    fetchResource(usersUrl, fallbackUsers).then((items) => {
       if (isMounted) {
         setUsers(items)
         setLoading(false)

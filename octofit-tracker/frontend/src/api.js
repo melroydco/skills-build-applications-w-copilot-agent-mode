@@ -41,8 +41,10 @@ function normalizeItems(payload) {
   return []
 }
 
-export async function fetchResource(resource, fallbackItems = []) {
-  const url = buildApiUrl(resource)
+export async function fetchResource(resourceOrUrl, fallbackItems = []) {
+  const url = typeof resourceOrUrl === 'string' && /^(https?:\/\/|\/)/.test(resourceOrUrl)
+    ? resourceOrUrl
+    : buildApiUrl(resourceOrUrl)
 
   try {
     const response = await fetch(url, {

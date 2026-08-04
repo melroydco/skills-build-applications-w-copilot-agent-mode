@@ -7,6 +7,10 @@ const fallbackLeaderboard = [
   { id: 3, name: 'Jules', points: 887 },
 ]
 
+const leaderboardUrl = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`
+  : 'http://localhost:8000/api/leaderboard/'
+
 export default function Leaderboard() {
   const [entries, setEntries] = useState([])
   const [loading, setLoading] = useState(true)
@@ -14,7 +18,7 @@ export default function Leaderboard() {
   useEffect(() => {
     let isMounted = true
 
-    fetchResource('leaderboard', fallbackLeaderboard).then((items) => {
+    fetchResource(leaderboardUrl, fallbackLeaderboard).then((items) => {
       if (isMounted) {
         setEntries(items)
         setLoading(false)

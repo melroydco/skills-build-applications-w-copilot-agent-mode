@@ -6,6 +6,10 @@ const fallbackWorkouts = [
   { id: 2, name: 'Power Circuit', focus: 'strength' },
 ]
 
+const workoutsUrl = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`
+  : 'http://localhost:8000/api/workouts/'
+
 export default function Workouts() {
   const [workouts, setWorkouts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -13,7 +17,7 @@ export default function Workouts() {
   useEffect(() => {
     let isMounted = true
 
-    fetchResource('workouts', fallbackWorkouts).then((items) => {
+    fetchResource(workoutsUrl, fallbackWorkouts).then((items) => {
       if (isMounted) {
         setWorkouts(items)
         setLoading(false)

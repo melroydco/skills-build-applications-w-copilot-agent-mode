@@ -6,6 +6,10 @@ const fallbackTeams = [
   { id: 2, name: 'River Runners', members: 5 },
 ]
 
+const teamsUrl = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams/`
+  : 'http://localhost:8000/api/teams/'
+
 export default function Teams() {
   const [teams, setTeams] = useState([])
   const [loading, setLoading] = useState(true)
@@ -13,7 +17,7 @@ export default function Teams() {
   useEffect(() => {
     let isMounted = true
 
-    fetchResource('teams', fallbackTeams).then((items) => {
+    fetchResource(teamsUrl, fallbackTeams).then((items) => {
       if (isMounted) {
         setTeams(items)
         setLoading(false)
